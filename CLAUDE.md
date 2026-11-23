@@ -1,10 +1,10 @@
-# CLAUDE.md — Load Path
+# CLAUDE.md — Spanwise
 
 Claude Code reads this file at the start of every session. Follow it on every task.
 
 ## What we are building
 
-Load Path: a 3D structural design assistant for residential wood-frame houses in Ontario, Canada. The engineer models the house, applies loads of any type and shape, traces them to the foundation, and checks every member against CSA O86 with cited clauses. Full vision: `docs/PRODUCT_OUTLINE.md`. Loads in detail: `docs/LOADS_SPEC.md`.
+Spanwise (working title was Load Path): a 3D structural design assistant for residential wood-frame houses in Ontario, Canada. The engineer models the house, applies loads of any type and shape, traces them to the foundation, and checks every member against CSA O86 with cited clauses. Full vision: `docs/PRODUCT_OUTLINE.md`. Loads in detail: `docs/LOADS_SPEC.md`.
 
 ## Who you work with
 
