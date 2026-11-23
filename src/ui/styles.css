@@ -17,10 +17,10 @@
   --input-bg: #ffffff;
   --code-bg: #f0f2f5;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  color-scheme: light dark;
+  color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --bg: #111418;
     --panel: #1a1e24;
     --text: #e6e9ee;
@@ -38,11 +38,32 @@
     --banner-text: #ffd08a;
     --input-bg: #0f1216;
     --code-bg: #222831;
+    color-scheme: dark;
   }
+}
+:root[data-theme='dark'] {
+    --bg: #111418;
+    --panel: #1a1e24;
+    --text: #e6e9ee;
+    --muted: #9aa4b2;
+    --line: #2d333b;
+    --accent: #7aa2ff;
+    --pass: #4cc38a;
+    --warn: #f0b429;
+    --fail: #ff6b6b;
+    --dead: #9ca3af;
+    --live: #6ea8ff;
+    --snow: #5fd4e6;
+    --env: #b794f6;
+    --banner-bg: #3a2a10;
+    --banner-text: #ffd08a;
+    --input-bg: #0f1216;
+    --code-bg: #222831;
+    color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.45; }
-.banner { background: var(--banner-bg); color: var(--banner-text); padding: 8px 16px; font-weight: 600; text-align: center; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); }
+.banner { background: var(--banner-bg); color: var(--banner-text); padding: 8px 16px; font-weight: 600; text-align: center; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; border-bottom: 1px solid var(--line); }
 header.top { padding: 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between; }
 header.top h1 { margin: 0; font-size: 20px; }
 header.top .sub { color: var(--muted); }
@@ -60,11 +81,11 @@ input[type='checkbox'] { width: auto; }
 .check { display: flex; gap: 6px; align-items: center; font-size: 13px; color: var(--text); }
 button { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--text); border-radius: 5px; padding: 5px 10px; cursor: pointer; }
 button:hover { border-color: var(--accent); }
-button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+button.primary { background: var(--accent); color: var(--panel); border-color: var(--accent); }
 button.x { padding: 2px 8px; color: var(--fail); }
 .row { border: 1px solid var(--line); border-radius: 6px; padding: 8px; margin-bottom: 8px; }
 .row .head { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; }
-.tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 4px; color: #fff; }
+.tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 4px; color: var(--panel); }
 .tag.D { background: var(--dead); } .tag.L { background: var(--live); } .tag.S { background: var(--snow); }
 .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 4px; border: 1px solid; }
 .badge.unv { color: var(--warn); border-color: var(--warn); }
@@ -72,7 +93,7 @@ button.x { padding: 2px 8px; color: var(--fail); }
 .badge.pass { color: var(--pass); border-color: var(--pass); }
 .badge.fail { color: var(--fail); border-color: var(--fail); }
 .badge.refused { color: var(--muted); border-color: var(--muted); }
-.flag { background: var(--fail); color: #fff; padding: 8px 10px; border-radius: 6px; font-weight: 700; margin-bottom: 8px; }
+.flag { background: var(--fail); color: var(--panel); padding: 8px 10px; border-radius: 6px; font-weight: 700; margin-bottom: 8px; }
 .warn { border-left: 3px solid var(--warn); padding: 4px 8px; margin: 4px 0; }
 .error { border-left: 3px solid var(--fail); padding: 8px; background: var(--code-bg); }
 .ok { color: var(--pass); }
@@ -96,6 +117,7 @@ details.check-d > div { padding: 0 10px 10px; }
 .chart-wrap { position: relative; }
 .chart-tip { position: absolute; top: 4px; right: 8px; font-size: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; pointer-events: none; }
 .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-.tabs button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tabs button.on { background: var(--accent); color: var(--panel); border-color: var(--accent); }
 .legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--muted); margin: 2px 0 6px; }
 .legend i { display: inline-block; width: 14px; height: 3px; vertical-align: middle; margin-right: 4px; }
+button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
