@@ -223,7 +223,7 @@ function LoadEditor({ form, set }: { form: MemberForm; set: (f: MemberForm) => v
   );
 }
 
-function Results({ res, form }: { res: MemberResult; form: MemberForm }) {
+function Results({ res, form, ms }: { res: MemberResult; form: MemberForm; ms: number }) {
   const [diag, setDiag] = useState<string>('envelope');
   const [defl, setDefl] = useState(0);
   const d = res.diagrams;
@@ -258,9 +258,13 @@ function Results({ res, form }: { res: MemberResult; form: MemberForm }) {
         {worst && (
           <p>
             Governing: <strong>{worst.label}</strong> at ratio{' '}
-            <span className={`ratio ${ratioClass(worst.ratio!)}`}>{fmt(worst.ratio!, 3)}</span>. {res.caseCount} load cases run (every combination × every on/off span pattern).
+            <span className={`ratio ${ratioClass(worst.ratio!)}`}>{fmt(worst.ratio!, 3)}</span>.
           </p>
         )}
+        <p className="small muted">
+          {res.caseCount} load cases run in {ms < 1 ? '<1' : Math.round(ms)} ms: every combination × every on/off span pattern ({res.segments.length} span segment
+          {res.segments.length > 1 ? 's' : ''}; live and snow patterns vary independently).
+        </p>
         <p className="small">
           {res.equilibrium.every((e) => e.ok) ? (
             <span className="ok">✓ Equilibrium: applied loads equal reactions for D, L and S (within 0.01 %).</span>
@@ -482,11 +486,13 @@ function PostPanel({ res }: { res: MemberResult | null }) {
 
 export function MemberTestPage() {
   const [form, setForm] = useState<MemberForm>(PRESETS[0]!.form());
-  const result = useMemo((): MemberResult | string => {
+  const { result, ms } = useMemo((): { result: MemberResult | string; ms: number } => {
+    const t0 = performance.now();
     try {
-      return runMember(formToInput(form, settings), cv);
+      const r = runMember(formToInput(form, settings), cv);
+      return { result: r, ms: performance.now() - t0 };
     } catch (e) {
-      return (e as Error).message;
+      return { result: (e as Error).message, ms: 0 };
     }
   }, [form]);
   const n = (k: 'length' | 'plies' | 'KSfb' | 'KSfv' | 'KSfcp' | 'KSE' | 'KT', label: string, optional = false) => (
@@ -591,7 +597,7 @@ export function MemberTestPage() {
               <p className="error">{result}</p>
             </section>
           ) : (
-            <Results res={result} form={form} />
+            <Results res={result} form={form} ms={ms} />
           )}
           <PostPanel res={typeof result === 'string' ? null : result} />
           <p className="muted small" style={{ textAlign: 'center' }}>

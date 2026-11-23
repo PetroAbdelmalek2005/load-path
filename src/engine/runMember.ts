@@ -8,7 +8,7 @@ import { buildMesh, type Segment } from './solver/beam';
 import { UnstableError } from './solver/banded';
 import { buildMaskSums, maskSpans, masksFor, solveUnitCases } from './patterns';
 import { checkEquilibrium, type EquilibriumResult } from './equilibrium';
-import { governingKD, kdFrom, type GoverningKD } from './checks/loadDuration';
+import { governingKD, kdFrom, opposite, type GoverningKD } from './checks/loadDuration';
 
 export type CheckStatus = 'pass' | 'fail' | 'refused' | 'not-applicable';
 
@@ -184,10 +184,12 @@ export function runMember(input: MemberInput, cv: CodeValues): MemberResult {
   const kdP = cv.kdPermanent.value;
   const kdStd = cv.kdStandard.value;
   const kdDD = cv.kdDeadDominant.value;
+  const kdMin = Math.min(kdP, kdDD.min, kdStd);
   const kdFast = (PL: number, PS: number, deadOnly: boolean): number => {
     const pl = Math.abs(PL);
     const ps = Math.abs(PS);
     if (deadOnly || ps <= 1e-12) return kdP;
+    if (opposite(PL, PS)) return kdP; // live/snow reduces the dead effect here
     if (pl > ps) return Math.min(kdStd, Math.max(kdDD.min, kdDD.a - kdDD.b * Math.log10(pl / ps)));
     return kdStd;
   };
@@ -234,7 +236,8 @@ export function runMember(input: MemberInput, cv: CodeValues): MemberResult {
             if (Mf < env.Mmin[st]!) env.Mmin[st] = Mf;
             if (Mf > 1e-9 && (!bestPos || Mf > bestPos.f)) bestPos = { r: 0, c, mL, mS, st, f: Mf, kd: 0 };
             if (Mf < -1e-9 && (!bestNeg || Mf < bestNeg.f)) bestNeg = { r: 0, c, mL, mS, st, f: Mf, kd: 0 };
-            if (Mr1 > 0) {
+            // KD can never be below kdMin, so skip points that cannot beat the current worst ratio.
+            if (Mr1 > 0 && (!bestM || Math.abs(Mf) > bestM.r * Mr1 * kdMin)) {
               const kd = Math.min(kdFast(md, (c.L !== 0 ? ml : 0) + (c.S !== 0 ? IsU * ms : 0), deadOnly), kdTot);
               const r = Math.abs(Mf) / (Mr1 * kd);
               if (!bestM || r > bestM.r) bestM = { r, c, mL, mS, st, f: Mf, kd };
@@ -245,9 +248,11 @@ export function runMember(input: MemberInput, cv: CodeValues): MemberResult {
             const Vf = c.D * vd + c.L * vl + fS * vs;
             if (Vf > env.Vmax[st]!) env.Vmax[st] = Vf;
             if (Vf < env.Vmin[st]!) env.Vmin[st] = Vf;
-            const kdv = Math.min(kdFast(vd, (c.L !== 0 ? vl : 0) + (c.S !== 0 ? IsU * vs : 0), deadOnly), kdTot);
-            const rv = Math.abs(Vf) / (Vr1 * kdv);
-            if (!bestV || rv > bestV.r) bestV = { r: rv, c, mL, mS, st, f: Vf, kd: kdv };
+            if (!bestV || Math.abs(Vf) > bestV.r * Vr1 * kdMin) {
+              const kdv = Math.min(kdFast(vd, (c.L !== 0 ? vl : 0) + (c.S !== 0 ? IsU * vs : 0), deadOnly), kdTot);
+              const rv = Math.abs(Vf) / (Vr1 * kdv);
+              if (!bestV || rv > bestV.r) bestV = { r: rv, c, mL, mS, st, f: Vf, kd: kdv };
+            }
           }
         }
         for (let j = 0; j < nSup; j++) {
@@ -530,6 +535,8 @@ export function runMember(input: MemberInput, cv: CodeValues): MemberResult {
     });
     return idx;
   });
+  const nodeSegs: number[][] = mesh.xs.map(() => []);
+  segNodes.forEach((idx, k) => idx.forEach((i) => nodeSegs[i]!.push(k)));
   const deflDiagrams: Diagrams['deflection'] = [];
   const deflCheck = (name: 'liveSnow' | 'total', f: Factors, divisor: number, divKey: string, divVerified: boolean): CheckResult[] => {
     const u = new Uses().merge(slsU);
@@ -546,13 +553,8 @@ export function runMember(input: MemberInput, cv: CodeValues): MemberResult {
           const v = f.D * D.defl[i]! + f.L * dl[i]! + f.S * IsS * ds[i]!;
           if (v > dmax[i]!) dmax[i] = v;
           if (v < dmin[i]!) dmin[i] = v;
+          for (const k of nodeSegs[i]!) if (Math.abs(v) > Math.abs(worst[k]!.v)) worst[k] = { v, i, mL, mS };
         }
-        mesh.segments.forEach((_, k) => {
-          for (const i of segNodes[k]!) {
-            const v = f.D * D.defl[i]! + f.L * dl[i]! + f.S * IsS * ds[i]!;
-            if (Math.abs(v) > Math.abs(worst[k]!.v)) worst[k] = { v, i, mL, mS };
-          }
-        });
       }
     }
     const allLoaded = Array.from(mesh.xs, (_, i) => f.D * D.defl[i]! + f.L * sumL.defl[allMask]![i]! + f.S * IsS * sumS.defl[allMask]![i]!);

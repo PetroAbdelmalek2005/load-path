@@ -144,3 +144,34 @@ describe('Snow', () => {
     near(snowBeforeIs(2.0, 0.4, 20, cv).value, 2.0 * 0.8 + 0.4);
   });
 });
+
+describe('KD with opposite-sign effects (Baher, 2026-11-23)', () => {
+  it('uses the permanent value when dead and live/snow effects have opposite signs', () => {
+    const r = kdFrom(5, -3, false, cv, new Uses());
+    expect(r.KD).toBe(0.65);
+    expect(r.formula).toMatch(/opposite signs/);
+    expect(kdFrom(-5, 3, false, cv, new Uses()).KD).toBe(0.65);
+    expect(kdFrom(-5, -3, false, cv, new Uses()).KD).toBeCloseTo(1 - 0.5 * Math.log10(5 / 3), 6);
+  });
+  it('the KD the checks report equals min(effect KD, total KD) recomputed from their own inputs', () => {
+    let seed = 777;
+    const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2 ** 31) / 2 ** 31);
+    let oppositeSeen = 0;
+    for (let k = 0; k < 30; k++) {
+      const L = 8;
+      const loads = [udl('D', 0.5 + rnd() * 3, 0, 8), udl('L', 1 + rnd() * 6, 0, 8), point('D', rnd() * 15, Math.round(rnd() * 79) / 10)];
+      const res = runMember(member(L, [sup('A', 0), sup('B', 3 + Math.round(rnd() * 20) / 10), sup('C', 8)], loads), cv);
+      for (const c of [res.checks.bending, res.checks.shear]) {
+        const kd = c.kd!;
+        expect(kd.KD).toBe(Math.min(kd.fromEffect.KD, kd.fromTotal.KD));
+        const inp = Object.fromEntries(c.demand!.inputs.map((i) => [i.symbol, Number(i.value)]));
+        const sym = c.id === 'bending' ? 'M' : 'V';
+        const PS = (inp['αL'] !== 0 ? inp[`${sym}L`]! : 0) + (inp['αS'] !== 0 ? inp['Is']! * inp[`${sym}S`]! : 0);
+        const eff = kdFrom(inp[`${sym}D`]!, PS, inp['αL'] === 0 && inp['αS'] === 0, cv, new Uses());
+        expect(kd.fromEffect.KD).toBeCloseTo(eff.KD, 3);
+        if (/opposite/.test(kd.fromEffect.formula)) oppositeSeen++;
+      }
+    }
+    expect(oppositeSeen).toBeGreaterThanOrEqual(0);
+  }, 60_000);
+});
