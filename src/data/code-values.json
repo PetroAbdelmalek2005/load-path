@@ -1,0 +1,564 @@
+{
+  "_readme": "Seed code values for Load Path. Every value is UNVERIFIED and was entered from memory. Baher must confirm each against the purchased code or standard, then set verified=true, verifiedBy and verifiedDate. Never store code text here: clause references and own-words notes only.",
+  "schemaVersion": 1,
+  "loads": {
+    "liveResidential": {
+      "value": 1.9,
+      "units": "kPa",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "Table 4.1.5.3"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Floor live load inside dwelling units"
+    },
+    "liveOtherOccupancies": {
+      "value": null,
+      "units": "kPa",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "Table 4.1.5.3"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Fill in: attics, balconies, garages, decks as needed"
+    },
+    "woodDensity": {
+      "value": 5,
+      "units": "kN/m3",
+      "source": {
+        "document": "Assumption",
+        "edition": "to confirm",
+        "ref": "n/a"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Self-weight of sawn lumber; conservative assumption, not a code value"
+    }
+  },
+  "snow": {
+    "Cb_default": {
+      "value": 0.8,
+      "units": "-",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "4.1.6.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Basic roof snow factor for typical small roofs; check the larger-roof rule"
+    },
+    "Cw_default": {
+      "value": 1,
+      "units": "-",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "4.1.6.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Wind exposure factor; reduced value allowed only for exposed sites"
+    },
+    "Ca_default": {
+      "value": 1,
+      "units": "-",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "4.1.6.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Shape factor; drifts and steps use other values"
+    },
+    "Cs_rule": {
+      "value": {
+        "flatUpToDeg": 30,
+        "zeroAtDeg": 70,
+        "formula": "(70 - slope)/40 between limits"
+      },
+      "units": "-",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "4.1.6.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Slope factor for non-slippery roofs; slippery roofs differ"
+    },
+    "Is_ULS_normal": {
+      "value": 1,
+      "units": "-",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "Table 4.1.6.2.-A"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Importance factor, normal importance, strength"
+    },
+    "Is_SLS_normal": {
+      "value": 0.9,
+      "units": "-",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "Table 4.1.6.2.-A"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Importance factor, normal importance, serviceability"
+    },
+    "climateByMunicipality": {
+      "value": {},
+      "units": "kPa",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "Climatic data (SB-1)"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Fill in Ss and Sr per municipality served"
+    }
+  },
+  "combinations": {
+    "value": [
+      {
+        "name": "1.4D",
+        "D": 1.4,
+        "L": 0,
+        "S": 0
+      },
+      {
+        "name": "1.25D + 1.5L + 1.0S",
+        "D": 1.25,
+        "L": 1.5,
+        "S": 1
+      },
+      {
+        "name": "1.25D + 1.5S + 0.5L",
+        "D": 1.25,
+        "L": 0.5,
+        "S": 1.5
+      },
+      {
+        "name": "0.9D + 1.5L + 1.0S",
+        "D": 0.9,
+        "L": 1.5,
+        "S": 1
+      },
+      {
+        "name": "0.9D + 1.5S + 0.5L",
+        "D": 0.9,
+        "L": 0.5,
+        "S": 1.5
+      }
+    ],
+    "units": "-",
+    "source": {
+      "document": "2024 OBC (O. Reg. 163/24) Div. B",
+      "edition": "to confirm",
+      "ref": "Table 4.1.3.2.-A"
+    },
+    "verified": false,
+    "verifiedBy": null,
+    "verifiedDate": null,
+    "note": "Gravity cases only. Companion factors (1.0S, 0.5L) are the least certain values here. 0.9D cases matter for uplift and cantilevers. Wind and earthquake cases added later."
+  },
+  "loadDuration": {
+    "standard": {
+      "value": 1,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "5.3.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Standard term"
+    },
+    "permanent": {
+      "value": 0.65,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "5.3.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Permanent, dead load only"
+    },
+    "deadDominantFormula": {
+      "value": {
+        "a": 1,
+        "b": 0.5,
+        "min": 0.65
+      },
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "5.3.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "KD = a - b*log10(PL/PS), not less than min, when PL > PS"
+    }
+  },
+  "resistanceFactors": {
+    "bending": {
+      "value": 0.9,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.4.1"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Sawn lumber bending"
+    },
+    "shear": {
+      "value": 0.9,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.5.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Sawn lumber shear"
+    },
+    "compressionParallel": {
+      "value": 0.8,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.6.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Columns"
+    },
+    "bearing": {
+      "value": 0.8,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.7"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Compression perpendicular to grain"
+    }
+  },
+  "sawnLumber": {
+    "plyThickness": {
+      "value": 38,
+      "units": "mm",
+      "source": {
+        "document": "CSA O141",
+        "edition": "to confirm",
+        "ref": "dressed sizes"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Dressed thickness of 2x lumber"
+    },
+    "depths": {
+      "value": {
+        "2x4": 89,
+        "2x6": 140,
+        "2x8": 184,
+        "2x10": 235,
+        "2x12": 286
+      },
+      "units": "mm",
+      "source": {
+        "document": "CSA O141",
+        "edition": "to confirm",
+        "ref": "dressed sizes"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Dressed depths"
+    },
+    "specifiedStrengths": {
+      "value": {
+        "SPF No.1/No.2": {
+          "fb": 11.8,
+          "fv": 1.5,
+          "fc": 11.5,
+          "fcp": 5.3,
+          "E": 9500,
+          "E05": 6500
+        },
+        "SPF Select Structural": {
+          "fb": 16.5,
+          "fv": 1.5,
+          "fc": 14.5,
+          "fcp": 5.3,
+          "E": 10500,
+          "E05": 7500
+        },
+        "D.Fir-L No.1/No.2": {
+          "fb": 11,
+          "fv": 1.9,
+          "fc": 14,
+          "fcp": 7,
+          "E": 11000,
+          "E05": 7000
+        },
+        "D.Fir-L Select Structural": {
+          "fb": 16.5,
+          "fv": 1.9,
+          "fc": 19,
+          "fcp": 7,
+          "E": 12500,
+          "E05": 8500
+        }
+      },
+      "units": "MPa",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "Table 6.3.1A"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Structural joists and planks / light framing grades; confirm category and every number"
+    },
+    "sizeFactorBendingShear": {
+      "value": {
+        "89": 1.7,
+        "114": 1.5,
+        "140": 1.4,
+        "184": 1.2,
+        "235": 1.1,
+        "286": 1
+      },
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "Table 6.4.5"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "KZb and KZv by depth in mm"
+    },
+    "systemFactorBuiltUp": {
+      "value": 1,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "Table 6.4.4"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Placeholder 1.0 = no credit. Confirm KH for nailed 2-ply and 3-ply beams"
+    },
+    "columnSizeFactor": {
+      "value": {
+        "coefficient": 6.3,
+        "exponent": -0.13,
+        "max": 1.3
+      },
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.6.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "KZc = 6.3 (d L)^-0.13 <= 1.3, d and L in mm"
+    },
+    "columnStabilityConstant": {
+      "value": 35,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.6.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Constant in KC expression"
+    },
+    "columnSlendernessMax": {
+      "value": 50,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.6.2"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Cc limit"
+    },
+    "builtUpColumnFactor": {
+      "value": 0.6,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.6.4"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "PLACEHOLDER. Confirm the real rule for nailed built-up columns"
+    },
+    "bearingFactorKB": {
+      "value": 1,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.7 (to confirm)"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Bearing factor KB. 1.0 = no credit for bearing length; conservative per Baher 2026-11-23"
+    },
+    "bearingSizeFactorKZcp": {
+      "value": 1,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "6.5.7 (to confirm)"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Size factor for bearing KZcp. 1.0 is conservative per Baher 2026-11-23"
+    },
+    "serviceConditionKS": {
+      "value": {
+        "fb": 1,
+        "fv": 1,
+        "fc": 1,
+        "fcp": 1,
+        "E": 1
+      },
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "service condition factor table (to confirm)"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Dry service. Wet service needs lower values; the app warns when a member is marked wet or exterior"
+    },
+    "treatmentFactorKT": {
+      "value": 1,
+      "units": "-",
+      "source": {
+        "document": "CSA O86",
+        "edition": "to confirm",
+        "ref": "treatment factor table (to confirm)"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Untreated wood"
+    }
+  },
+  "serviceability": {
+    "deflectionLiveOrSnow": {
+      "value": 360,
+      "units": "span/",
+      "source": {
+        "document": "2024 OBC (O. Reg. 163/24) Div. B",
+        "edition": "to confirm",
+        "ref": "Table 9.4.3.1 / project criteria"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Default L/360; engineer may change per project"
+    },
+    "deflectionTotal": {
+      "value": 240,
+      "units": "span/",
+      "source": {
+        "document": "Project criteria",
+        "edition": "to confirm",
+        "ref": "n/a"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Default L/240"
+    },
+    "combinations": {
+      "value": {
+        "liveSnow": {
+          "D": 0,
+          "L": 1,
+          "S": 1
+        },
+        "total": {
+          "D": 1,
+          "L": 1,
+          "S": 1
+        }
+      },
+      "units": "-",
+      "source": {
+        "document": "Project criteria",
+        "edition": "to confirm",
+        "ref": "Baher decision 2026-11-23"
+      },
+      "verified": false,
+      "verifiedBy": null,
+      "verifiedDate": null,
+      "note": "Specified-load cases for deflection. Snow uses the SLS importance factor. 1.0L + 1.0S together is conservative"
+    }
+  }
+}

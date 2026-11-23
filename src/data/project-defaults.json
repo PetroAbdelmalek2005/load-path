@@ -1,0 +1,23 @@
+{
+  "_readme": "Project criteria chosen by the engineer. These are not code values. The engineer may change them per project.",
+  "cantileverDeflectionMultiplier": {
+    "value": 2,
+    "units": "-",
+    "note": "Cantilever tip deflection is checked against (multiplier x cantilever length) / limit. Baher decision 2026-11-23."
+  },
+  "defaultBearingLength": {
+    "value": 89,
+    "units": "mm",
+    "note": "Used only when the supporting element's size is unknown. Marked assumed. Baher decision 2026-11-23."
+  },
+  "postEffectiveLengthFactorKe": {
+    "value": 1.0,
+    "units": "-",
+    "note": "Posts pinned at both ends. Baher decision 2026-11-23."
+  },
+  "maxSpansForPatternLoading": {
+    "value": 6,
+    "units": "spans",
+    "note": "Every on/off span pattern is run up to this many spans (2^n cases). Above it the engine stops and warns. Baher decision 2026-11-23."
+  }
+}
