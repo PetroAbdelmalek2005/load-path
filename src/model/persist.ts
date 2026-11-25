@@ -57,8 +57,14 @@ export async function autosave(text: string): Promise<boolean> {
     try {
       const tx = db.transaction(STORE, 'readwrite');
       tx.objectStore(STORE).put(text, 'current');
-      tx.oncomplete = () => resolve(true);
-      tx.onerror = () => resolve(false);
+      tx.oncomplete = () => {
+        db.close();
+        resolve(true);
+      };
+      tx.onerror = () => {
+        db.close();
+        resolve(false);
+      };
     } catch {
       resolve(false);
     }
@@ -71,8 +77,14 @@ export async function loadAutosave(): Promise<string | null> {
   return new Promise((resolve) => {
     try {
       const req = db.transaction(STORE, 'readonly').objectStore(STORE).get('current');
-      req.onsuccess = () => resolve(typeof req.result === 'string' ? req.result : null);
-      req.onerror = () => resolve(null);
+      req.onsuccess = () => {
+        db.close();
+        resolve(typeof req.result === 'string' ? req.result : null);
+      };
+      req.onerror = () => {
+        db.close();
+        resolve(null);
+      };
     } catch {
       resolve(null);
     }

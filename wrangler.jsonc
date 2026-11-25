@@ -1,0 +1,9 @@
+// Cloudflare Workers with static assets (DECISIONS.md 2026-11-25).
+// The app is a static site: Cloudflare serves the built files in dist/. No server code.
+{
+  "name": "spanwise",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}

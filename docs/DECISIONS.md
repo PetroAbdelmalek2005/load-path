@@ -4,6 +4,15 @@ Every engineering assumption and design decision, with the reason. Newest at the
 
 | Date | Decision | Reason | Revisit when |
 | --- | --- | --- | --- |
+| 2026-11-25 | Milestone 2 choices made by Claude, for Baher to confirm: beams belong to the level whose floor they support (flush and dropped are relative to that floor). Walls and posts belong to the level they stand on | Matches a floor framing plan: the Ground floor plan shows its beams and the posts below them come from the level below | Baher confirms |
+| 2026-11-25 | Header top = underside of the top plates: wall top − (plates − 1) × plate thickness (38 mm). Marked assumed | One bottom plate, the rest on top, per the three-plate default | Baher confirms |
+| 2026-11-25 | Drawing defaults for new walls: 2x6 studs at 406 mm, 140 mm thick, 3 plates. Default opening height 2032 mm. All editable, every element assumed | Starting values for drawing only, not engineering values | Baher confirms |
+| 2026-11-25 | Changes that reset the model gate: all geometry and member properties (sections, heights, bearing flag, links). Changes that do not: label, notes, verified/assumed status, project information, drawing defaults | Conservative: a section change can change load paths later | Baher confirms |
+| 2026-11-25 | Copying a level copies every element with new IDs; links inside the level follow the copy; links to other levels are cleared (post base and top go back to defaults) | A copied post should not silently stay linked to the original level's beam | Never |
+| 2026-11-25 | Flush beams need the floor surface's joist size (subfloor = floor depth − joist depth). Without it, the flush option is disabled and the stored elevation is used | Never guess the subfloor thickness | Never |
+| 2026-11-25 | Opening offset is measured from the wall's start point along the wall | Unambiguous for any wall direction | Never |
+| 2026-11-25 | Browser autosave restores only when nothing has been edited since the page opened | Prevents a late restore from overwriting new work (found by end-to-end tests) | Never |
+| 2026-11-25 | 3D shows roof surfaces flat at the top of the plates until rafters arrive in Milestone 3 | Pitch is stored now; sloped geometry comes with rafters | Milestone 3 |
 | 2026-11-25 | Devices: drawing on desktop and laptop; view-only on phone and tablet | Baher Q15 | Never |
 | 2026-11-25 | Hosting: Cloudflare Workers with static assets (not Pages), with Cloudflare Access limited to Baher's email. Keep a "copy JSON" button as well as the download. No real client data online until there is a login | Baher Q14. Cloudflare recommends Workers for new projects (checked 2026-11-25) | A login is added |
 | 2026-11-25 | Snap distance is measured in screen pixels (default 10 px). A snapped point equals the target point exactly | Baher Q13 | Never |

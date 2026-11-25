@@ -10,7 +10,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc -b",
-    "verify-list": "node scripts/gen-verify-list.mjs"
+    "verify-list": "node scripts/gen-verify-list.mjs",
+    "e2e": "playwright test --trace off",
+    "test:all": "vitest run && npm run build && playwright test --trace off"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

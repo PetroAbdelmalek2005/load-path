@@ -484,8 +484,8 @@ function PostPanel({ res }: { res: MemberResult | null }) {
   );
 }
 
-export function MemberTestPage() {
-  const [form, setForm] = useState<MemberForm>(PRESETS[0]!.form());
+export function MemberTestPage({ initial, embedded }: { initial?: MemberForm; embedded?: boolean } = {}) {
+  const [form, setForm] = useState<MemberForm>(initial ?? PRESETS[0]!.form());
   const { result, ms } = useMemo((): { result: MemberResult | string; ms: number } => {
     const t0 = performance.now();
     try {
@@ -510,11 +510,12 @@ export function MemberTestPage() {
 
   return (
     <>
-      <div className="banner">{DISCLAIMER}</div>
+      {!embedded && <div className="banner">{DISCLAIMER}</div>}
       <header className="top">
         <div>
           <h1>Spanwise · single member test page</h1>
           <span className="sub">Milestone 1 engine check. Sawn lumber, CSA O86. All code values are unverified until the engineer confirms them.</span>
+          {initial && <div className="notice small">Span and section sent from the model ({form.name}). Supports are pin and roller at the ends; add loads by hand. Not a design check of the model.</div>}
         </div>
         <label className="f" style={{ minWidth: 260 }}>
           Load an example
@@ -534,7 +535,7 @@ export function MemberTestPage() {
           </select>
         </label>
       </header>
-      <main>
+      <main className="m1">
         <div>
           <section className="panel">
             <h2>Member</h2>
