@@ -6,6 +6,8 @@ import { PlanView } from './PlanView';
 import { PropertiesPanel } from './PropertiesPanel';
 import { Viewer3D } from './Viewer3D';
 import { FileActions } from '../project/ProjectPage';
+import { exampleHouse } from '../../model/sample';
+import { modelStore } from '../state';
 
 
 const TOOLS: { key: Tool; label: string; key2: string }[] = [
@@ -126,6 +128,21 @@ export function ModelPage() {
         )}
       </div>
       {readOnly && <div className="notice small">View only on this screen size. Drawing works on a desktop or laptop.</div>}
+      {project.elements.length === 0 && (
+        <div className="notice small" data-testid="empty-model">
+          This model is empty. Pick a drawing tool on the left, or{' '}
+          <button
+            className="link"
+            onClick={() => {
+              modelStore.getState().load(exampleHouse(tables), 'unconfirmed');
+              ui.set({ selectedId: null, levelId: null });
+            }}
+          >
+            load an example house
+          </button>{' '}
+          (sample data, all assumed).
+        </div>
+      )}
 
       <div className={`model-grid ${readOnly ? 'ro' : ''}`}>
         {!readOnly && (

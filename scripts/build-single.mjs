@@ -6,7 +6,7 @@ const dir = new URL('../dist/assets/', import.meta.url);
 const files = readdirSync(dir);
 const js = files.filter((f) => f.endsWith('.js')).map((f) => readFileSync(new URL(f, dir), 'utf8')).join('\n');
 const css = files.filter((f) => f.endsWith('.css')).map((f) => readFileSync(new URL(f, dir), 'utf8')).join('\n');
-const html = `<title>Spanwise Member Test</title>
+const html = `<title>Spanwise</title>
 <style>${css}</style>
 <div id="root"></div>
 <script type="module">${js.replace(/<\/script/g, '<\\/script')}</script>

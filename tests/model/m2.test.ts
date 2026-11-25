@@ -267,3 +267,18 @@ describe('M2-L bare numbers and ft-in', () => {
     expect(parseLength(`12'-6 1/0"`, 'mm').ok).toBe(false);
   });
 });
+
+describe('Example house', () => {
+  it('is valid, all assumed, posts linked to the flush beam', async () => {
+    const { exampleHouse } = await import('../../src/model/sample');
+    const { validateProject } = await import('../../src/model/validate');
+    const p = exampleHouse(T);
+    expect(validateProject(p)).toEqual([]);
+    expect(p.elements.every((e) => e.status === 'assumed')).toBe(true);
+    const beam = p.elements.find((e): e is Beam => e.kind === 'beam' && e.role === 'beam')!;
+    const posts = p.elements.filter((e): e is Post => e.kind === 'post');
+    expect(posts.every((x) => x.supportsId === beam.id)).toBe(true);
+    // flush: top = 0 − (300 − 235) = −65; underside −300; basement floor −2740
+    expect(postGeometry(p, posts[0]!, T).length).toBe(-65 - 235 + 2740);
+  });
+});

@@ -358,7 +358,7 @@ export function PlanView({ readOnly }: { readOnly: boolean }) {
           {!ghostMode && (
             <>
               <line x1={arrowA.x} y1={arrowA.y} x2={arrowB.x} y2={arrowB.y} className="span-arrow" markerEnd="url(#arrow)" markerStart="url(#arrow)" />
-              <text x={toS(c).x} y={toS(c).y - 8} className="lbl" textAnchor="middle">
+              <text x={toS(c).x} y={toS(c).y + (e.role === 'roof' ? 30 : -8)} className="lbl" textAnchor="middle">
                 {e.label} {e.role === 'roof' ? `roof ${e.pitch ?? 0}°` : 'floor'}
                 {e.joistSize ? ` · ${e.joistSize}@${e.joistSpacing ?? '?'}` : ''}
               </text>
