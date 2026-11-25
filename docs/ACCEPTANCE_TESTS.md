@@ -58,3 +58,31 @@ Shared section for A, B and D: 3-ply 2x10, each ply 38 × 235 mm (b = 114, d = 2
 - Sum of all foundation reactions = 7.2 kN dead and 27.36 kN live, equal to the applied load.
 
 **Test N. Equilibrium on every model.** For any model, the sum of applied loads per pattern must equal the sum of foundation reactions per pattern, within 0.01%. Run this check automatically after every analysis and show a warning if it fails.
+
+## Milestone 2: model and 3D
+
+Approved by Baher 2026-11-25.
+
+**M2-A. Closed rectangle by typed lengths.** Draw four walls by typed lengths, 8.0 m × 6.0 m. They form a closed rectangle within 1 mm. Second run: type 26'-3" × 19'-8 1/4". It also closes within 1 mm.
+
+**M2-B. Undo and redo.** Make 20 edits, including a delete, a level copy and an opening. Undo all, then redo all. The model is deep-equal to the state at each end.
+
+**M2-C. Save round trip.** Save to JSON and reopen. The model is deep-equal, IDs included.
+
+**M2-D. Copy level.** Copy Level 1 up. The new level sits at the correct elevation. Every element is copied with a new ID.
+
+**M2-E. Model gate.** Confirm the model, then move one wall. The model is unconfirmed. Undo the move. The model stays unconfirmed.
+
+**M2-F. Member panel.** Click a beam in 3D. The panel shows its section, length, level and status.
+
+**M2-G. Snapping.** A beam end within the snap distance of a post snaps exactly onto the post.
+
+**M2-H. Open items.** The open-items list shows every assumed element.
+
+**M2-I. File version.** Opening a file with an unknown or older version shows a clear message. The app does not corrupt the file.
+
+**M2-J. Opening header.** Adding an opening creates a header marked assumed, with the default section.
+
+**M2-K. Post length.** Moving the beam above a post updates the post's length automatically.
+
+**M2-L. Bare numbers.** A bare number uses the project's bare-number unit. The converted value appears before it is accepted.

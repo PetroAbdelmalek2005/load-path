@@ -4,6 +4,23 @@ Every engineering assumption and design decision, with the reason. Newest at the
 
 | Date | Decision | Reason | Revisit when |
 | --- | --- | --- | --- |
+| 2026-11-25 | Devices: drawing on desktop and laptop; view-only on phone and tablet | Baher Q15 | Never |
+| 2026-11-25 | Hosting: Cloudflare Workers with static assets (not Pages), with Cloudflare Access limited to Baher's email. Keep a "copy JSON" button as well as the download. No real client data online until there is a login | Baher Q14. Cloudflare recommends Workers for new projects (checked 2026-11-25) | A login is added |
+| 2026-11-25 | Snap distance is measured in screen pixels (default 10 px). A snapped point equals the target point exactly | Baher Q13 | Never |
+| 2026-11-25 | Dimension input accepts ft-in and metric: 12'-6", 12' 6", 12'-6 1/2", 150", 3810mm, 3.81m. Stored in mm, displayed in SI. Project setting for the unit of a bare number (default mm). The converted value shows before it is accepted | Baher Q12 | Never |
+| 2026-11-25 | Member panel shows properties only, plus "Send to Engine test" (fills span and section). No checks on unconfirmed supports or hand-typed loads | Baher Q11 | Milestone 4 |
+| 2026-11-25 | Templates (joists between two walls, beam on two posts, remove this wall) wait for Milestone 3 or 4 | Baher Q10 | Milestone 3 |
+| 2026-11-25 | Roof surface outline now, with pitch and ridge direction fields. Rafters and the gable template wait for Milestone 3 | Baher Q9: avoids a breaking change to the save format | Milestone 3 |
+| 2026-11-25 | Model gate applies to every model, hand-drawn included. Undo never restores "confirmed". A level copy is a geometry change | Baher Q8: one rule for every model | Never |
+| 2026-11-25 | New elements default to "assumed". Verifying is a deliberate action. A project drawing mode (Existing or New, default Existing) sets the existing/new default | Baher Q7 | Never |
+| 2026-11-25 | An opening creates a header automatically, marked assumed: 2-ply 2x10 SPF No.1/No.2 with one jack stud (38 mm bearing) each end. Editable and deletable | Baher Q6 | Never |
+| 2026-11-25 | Surfaces get span direction now, with joist size and spacing as optional fields. Loads wait for Milestone 3 | Baher Q5 | Milestone 3 |
+| 2026-11-25 | Wall properties: stud size, stud spacing, number of plates, height, bearing flag. The bearing flag is Baher's manual choice. A later suggestion must never overwrite it without asking | Baher Q4 | Milestone 4 |
+| 2026-11-25 | Posts run from the top of the element under them to the underside of the beam they support. A post stores both links; its length is calculated | Baher Q3 | Never |
+| 2026-11-25 | Beams store the top-of-beam elevation. Presets: "flush" (beam top = joist top) and "dropped" (beam top = joist underside) | Baher Q3 | Never |
+| 2026-11-25 | Walls store centreline and thickness. Drawing by the exterior face with an inward offset is allowed | Baher Q3 | Never |
+| 2026-11-25 | Default wall height 2.47 m (precut 8 ft: 92-5/8" stud plus three plates). Default floor depth 0.30 m. Floor-to-floor = wall height + floor depth (2.77 m), calculated, never typed. All three editable per level | Baher Q2. OPEN: Baher noted "my default: 9 ft ceiling"; to confirm which default to ship | Baher confirms |
+| 2026-11-25 | Elevation 0 = top of ground-floor subfloor. Each level's elevation = top of its subfloor. Basement slab and top of foundation wall are negative. Roof level = top of top plates of the highest wall | Baher Q1 | Never |
 | 2026-11-23 | Load-set solve uses element nodes only at member ends, supports and load points. Diagrams are sampled at 200 points per span segment by statics. Deflection between nodes uses the exact clamped-element solution | Element nodes are exact for Euler-Bernoulli beams. A fine element mesh made short overhangs ill-conditioned (0.1 % equilibrium error found by Test N) | Never |
 | 2026-11-23 | Test page keeps its form in React state, not Zustand | There is no building model yet. Zustand arrives with the model in Milestone 2 | Milestone 2 |
 | 2026-11-23 | Pin and roller supports behave the same | Milestone 1 has no axial analysis | Frame analysis (Milestone 8) |
