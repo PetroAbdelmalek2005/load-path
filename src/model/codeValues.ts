@@ -102,3 +102,9 @@ export function projectDefaults(): ProjectSettings & { postKe: number } {
 export function codeValueIndex(): Map<string, RawEntry> {
   return listEntries(raw);
 }
+
+/** Lumber section sizes for model geometry (from code-values.json). */
+export function sectionTables(): { depths: Record<string, number>; plyThickness: number } {
+  const cv = buildCodeValues();
+  return { depths: cv.depths.value, plyThickness: cv.plyThickness.value };
+}
